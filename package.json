@@ -1,0 +1,46 @@
+{
+  "name": "hx-api",
+  "version": "1.0.0",
+  "description": "A Simple node.js api",
+  "scripts": {
+    "start": "pm2 start src/server.js --watch --interpreter babel-node",
+    "stop": "pm2 stop src/server.js",
+    "restart": "pm2 restart src/server.js",
+    "test": "jest src/test",
+    "build": "babel src —-out-dir dist"
+  },
+  "author": "Greg Smith",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/node": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.4",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "webpack": "^4.23.1",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.2",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "eslint": "^5.7.0",
+    "eslint-plugin-react": "^7.11.1",
+    "jest": "^23.6.0",
+    "nodemon": "^1.18.4",
+    "regenerator-runtime": "^0.12.1",
+    "webpack-cli": "^3.1.2",
+    "pm2": "^3.2.2"
+  },
+  "jest": {
+    "verbose": true,
+    "watchPathIgnorePatterns": ["node_modules", "db/data"]
+  }
+}
