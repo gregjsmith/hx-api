@@ -1,9 +1,12 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
-/dist
+/web/dist
 /tmp
 /out-tsc
+
+# test data
+/db/data
 
 # Runtime data
 pids
