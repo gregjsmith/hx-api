@@ -132,10 +132,11 @@ describe("UserService", () => {
       }));
 
       return service.saveUser({givenName: "John"})
-        .then((user) => {
+        .then((resp) => {
           expect(mockValidate).toHaveBeenCalledTimes(1);
           expect(mockInsert).toHaveBeenCalledTimes(1);
           expect(mockUpdate).toHaveBeenCalledTimes(0);
+          expect(resp.status).toBe('created');
         });
     });
 
@@ -168,9 +169,10 @@ describe("UserService", () => {
       }));
 
       return service.saveUser(john)
-        .then((user) => {
+        .then((resp) => {
           expect(mockValidate).toHaveBeenCalledTimes(1);
           expect(mockUpdate).toHaveBeenCalledTimes(1);
+          expect(resp.status).toBe('updated');
         });
     });
 

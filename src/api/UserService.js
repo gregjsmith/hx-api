@@ -36,7 +36,7 @@ class UserService {
       return new Promise((resolve, reject) => {
         this.db.insert(user)
           .then((user) => {
-            resolve(user);
+            resolve({user, status: 'created'});
           })
           .catch((e) => {
             reject(new ApiError('Failed to create new user', e));
@@ -47,7 +47,7 @@ class UserService {
       return new Promise((resolve, reject) => {
         this.db.update(user)
           .then((user) => {
-            resolve(user);
+            resolve({user, status: 'updated'});
           })
           .catch((e) => {
             reject(new ApiError(`Failed to update user with id ${user._id}`, e));

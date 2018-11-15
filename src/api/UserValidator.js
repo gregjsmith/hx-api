@@ -12,11 +12,9 @@ let processValidationResult = (result) => {
 }
 
 class UserValidator {
-  constructor(){
-    this.validator = new Validator();
-  }
-
   validate(user){
+    const validator = new Validator();
+
     let schema = {
         givenName: { type: "string", min: 1, max: 255 },
         familyName: { type: "string", min: 1, max: 255 },
@@ -24,7 +22,7 @@ class UserValidator {
         email: { type: "email"}
     };
 
-    let check = this.validator.compile(schema);
+    let check = validator.compile(schema);
 
     let result = check(user);
 
@@ -32,6 +30,8 @@ class UserValidator {
   }
 
   validateForDelete(user){
+    const validator = new Validator();
+
     let schema = {
         _id: { type: "string", min: 1, max: 255 },
     };
