@@ -50,9 +50,9 @@ class UserDb {
     });
   }
 
-  delete(user){
+  delete(id){
     return new Promise((resolve, reject) => {
-      this.db.remove({_id: user._id}, {}, (e, numRemoved) => {
+      this.db.remove({_id: id}, {}, (e, numRemoved) => {
         if(e){
           reject({message: e.message});
         }

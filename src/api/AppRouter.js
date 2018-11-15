@@ -10,16 +10,25 @@ class AppRouter {
   }
 
   initApiRoutes(){
-    this.router.route('/users')
-      .get(async (req, res) => {
-        try {
-          let response;
 
-          if(req.query.id){
-            response = await this.userService.getById(req.query.id);
-          } else{
-            response = await this.userService.getUsers();
-          }
+    this.router.get('/users', async (req, res) => {
+      try {
+        let response = await this.userService.getUsers();
+
+        if(response === null || response === []){
+          res.status(404);
+        }
+
+        res.json(response);
+
+      } catch(e) {
+        res.status(500).json(e);
+      }
+    });
+
+    this.router.get('/users/:id', async (req, res) => {
+        try {
+          let response = await this.userService.getById(req.params.id);
 
           if(response === null || response === []){
             res.status(404);
@@ -30,33 +39,46 @@ class AppRouter {
         } catch(e) {
           res.status(500).json(e);
         }
-      })
-      .post(async (req, res) => {
-        try {
-          let response = await this.userService.saveUser(req.body);
-          let status;
-          if(response.status === 'created'){
-            status = 201;
-          } else {
-            status = 200;
-          }
+    });
 
-          res.location(`/users/${response.user._id}`)
-            .status(status)
-            .json(response);
+    this.router.post('/users', async (req, res) => {
+      try {
+        let response = await this.userService.saveUser(req.body);
+        let status;
+        if(response.status === 'created'){
+          status = 201;
+        } else {
+          status = 200;
+        }
 
-        } catch(e){
-          res.status(500).json(e);
+        res.location(`/users/${response.user._id}`)
+          .status(status)
+          .json(response);
+
+      } catch(e){
+        res.status(500).json(e);
+      }
+    });
+
+    this.router.delete('/users/:id', async (req, res) => {
+      try {
+        let response = await this.userService.delete(req.params.id);
+
+        let status;
+
+        if(response.removed > 0){
+          status = 200;
+        } else{
+          status = 404;
         }
-      })
-      .delete(async (req, res) => {
-        try {
-          let response = await this.userService.delete(req.body);
-          res.json(response);
-        } catch(e){
-          res.status(500).json(e);
-        }
-      });
+
+        res.status(status)
+          .json(response);
+
+      } catch(e){
+        res.status(500).json(e);
+      }
+    });
   }
 }
 

@@ -56,22 +56,20 @@ class UserService {
     }
   }
 
-  delete(user){
-    let result = this.validator.validateForDelete(user);
-
-    if(!result.isValid){
+  delete(id){
+    if(!id){
       return new Promise((resolve, reject) => {
         reject(new ApiError('Validation Failed', result.errors));
       });
     }
 
     return new Promise((resolve, reject) => {
-      this.db.delete(user)
+      this.db.delete(id)
         .then((removed) => {
-          resolve({message: `Number of users removed for _id ${user._id}: ${removed}`});
+          resolve({removed});
         })
         .catch((e) => {
-          reject(new ApiError(`Failed to delete user with id ${user._id}`, e));
+          reject(new ApiError(`Failed to delete user with id ${id}`, e));
         });
     });
   }
