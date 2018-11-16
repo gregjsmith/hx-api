@@ -53,5 +53,9 @@
       "node_modules",
       "api/db/data"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gregjsmith/hx-api"
   }
 }
