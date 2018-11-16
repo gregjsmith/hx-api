@@ -207,3 +207,7 @@ No user found: 404
     "removed": 1
 }
 ```
+
+# Demo User Website
+
+Site is a work in progress. A basic list of users can be accessed on the UI at the root URL: http://localhost:3000/
