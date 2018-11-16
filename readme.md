@@ -38,8 +38,8 @@ Run test suite using Jest
 
 The api exposes functionality to get all, get one, create, update and delete users.
 
-##### Get all users
-###### Request
+#### Get all users
+##### Request
 
 ```sh
 curl -X GET \
@@ -47,10 +47,12 @@ curl -X GET \
   -H 'cache-control: no-cache'
 ```
 
-###### Response
+##### Response
 
 Success: 200
+
 Error: 500
+
 No users found: 404
 
 ```json
@@ -74,8 +76,8 @@ No users found: 404
 ]
 ```
 
-##### Get one user by id
-###### Request
+#### Get one user by id
+##### Request
 
 ```sh
 curl -X GET \
@@ -83,10 +85,12 @@ curl -X GET \
   -H 'cache-control: no-cache'
 ```
 
-###### Response
+##### Response
 
 Success: 200
+
 Error: 500
+
 No users found: 404
 
 ```json
@@ -101,10 +105,10 @@ No users found: 404
 ```
 
 
-##### Create a new User
-###### (mandatory properties: `givenName`, `familyName`, `age` and `email`)
+#### Create a new User
+##### (mandatory properties: `givenName`, `familyName`, `age` and `email`)
 
-###### Request
+##### Request
 ```sh
 curl -X POST \
   http://localhost:3000/api/users/ \
@@ -118,9 +122,10 @@ curl -X POST \
 }'
 ```
 
-###### Response
+##### Response
 
 Sucess: 201
+
 Error: 500
 
 ```json
@@ -137,9 +142,9 @@ Error: 500
 }
 ```
 
-##### Update an existing user
-###### (mandatory properties: `_id`, `givenName`, `familyName`, `age` and `email`)
-###### Request
+#### Update an existing user
+##### (mandatory properties: `_id`, `givenName`, `familyName`, `age` and `email`)
+##### Request
 
 ```sh
 curl -X POST \
@@ -155,9 +160,10 @@ curl -X POST \
     }'
 ```
 
-###### Response
+##### Response
 
 Sucess: 200
+
 Error: 500
 
 ```json
@@ -175,8 +181,8 @@ Error: 500
 }
 ```
 
-##### Delete one user by id
-###### Request
+#### Delete one user by id
+##### Request
 
 ```sh
 curl -X DELETE \
@@ -188,10 +194,12 @@ curl -X DELETE \
 }'
 ```
 
-###### Response
+##### Response
 
 Success: 204
+
 Error: 500
+
 No user found: 404
 
 ```json
