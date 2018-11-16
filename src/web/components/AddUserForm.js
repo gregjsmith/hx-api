@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 function AddUserForm(props) {
-  return(
+  return (
     <div></div>
   );
 }

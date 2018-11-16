@@ -1,5 +1,5 @@
 class ApiError {
-  constructor(message, errors){
+  constructor(message, errors) {
     this.message = message;
     this.errors = errors;
   }

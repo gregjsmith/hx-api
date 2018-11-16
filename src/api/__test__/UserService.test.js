@@ -6,7 +6,7 @@ import ApiError from '../ApiError';
 jest.mock('../db/UserDb');
 jest.mock('../UserValidator');
 
-describe("UserService", () => {
+describe('UserService', () => {
 
   beforeEach(()=> {
     UserDb.mockClear();
@@ -23,13 +23,13 @@ describe("UserService", () => {
   afterEach(()=> {
   });
 
-  describe("when getting all users", () => {
+  describe('when getting all users', () => {
 
-    test("should return all users from the database", () => {
+    test('should return all users from the database', () => {
       const service = new UserService();
 
       mockGetAll.mockReturnValue(new Promise((resolve) => {
-        resolve([{givenName: "John"}]);
+        resolve([{givenName: 'John'}]);
       }));
 
       return service.getUsers()
@@ -40,11 +40,11 @@ describe("UserService", () => {
         });
     });
 
-    test("should return ApiError if the call to db fails", () => {
+    test('should return ApiError if the call to db fails', () => {
       const service = new UserService();
 
       mockGetAll.mockReturnValue(new Promise((resolve, reject) => {
-        reject(new Error("Something bad happened"));
+        reject(new Error('Something bad happened'));
       }));
 
       return service.getUsers()
@@ -57,31 +57,31 @@ describe("UserService", () => {
 
   });
 
-  describe("when getting a user by id", () => {
+  describe('when getting a user by id', () => {
 
-    test("should call database for relevant user id", () => {
+    test('should call database for relevant user id', () => {
       const service = new UserService();
 
       mockGetById.mockReturnValue(new Promise((resolve) => {
-        resolve([{givenName: "John"}]);
+        resolve([{givenName: 'John'}]);
       }));
 
-      return service.getById("123123")
+      return service.getById('123123')
         .then((user) => {
           expect(UserDb).toHaveBeenCalledTimes(1);
           expect(mockGetById).toHaveBeenCalledTimes(1);
-          expect(mockGetById).toBeCalledWith("123123");
+          expect(mockGetById).toBeCalledWith('123123');
         });
     });
 
-    test("should return ApiError if the call to db fails", () => {
+    test('should return ApiError if the call to db fails', () => {
       const service = new UserService();
 
       mockGetById.mockReturnValue(new Promise((resolve, reject) => {
-        reject(new Error("Something bad happened"));
+        reject(new Error('Something bad happened'));
       }));
 
-      return service.getById("123123")
+      return service.getById('123123')
         .catch((e) => {
           expect(e instanceof ApiError).toBe(true);
           expect(e.message).toContain('Error when searching for user with id 123123');
@@ -91,28 +91,28 @@ describe("UserService", () => {
 
   });
 
-  describe("When saving a user", () => {
-    test("user details should be validated", () => {
+  describe('When saving a user', () => {
+    test('user details should be validated', () => {
       const service = new UserService();
 
       mockValidate.mockReturnValue({errors: [], isValid: true});
 
       mockInsert.mockReturnValue(new Promise((resolve)=> {
-          resolve({givenName: "John"});
+          resolve({givenName: 'John'});
       }));
 
-      return service.saveUser({givenName: "John"})
+      return service.saveUser({givenName: 'John'})
         .then((user) => {
           expect(mockValidate).toHaveBeenCalledTimes(1);
         });
     });
 
-    test("should throw ApiError if user details invalid", () => {
+    test('should throw ApiError if user details invalid', () => {
       const service = new UserService();
 
       mockValidate.mockReturnValue({errors: [], isValid: false});
 
-      return service.saveUser({givenName: "John"})
+      return service.saveUser({givenName: 'John'})
         .catch((e) => {
           expect(mockValidate).toHaveBeenCalledTimes(1);
           expect(e instanceof ApiError).toBe(true);
@@ -121,16 +121,16 @@ describe("UserService", () => {
         });
     });
 
-    test("should insert to database if details valid and no _id exists", () => {
+    test('should insert to database if details valid and no _id exists', () => {
       const service = new UserService();
 
       mockValidate.mockReturnValue({errors: [], isValid: true});
 
       mockInsert.mockReturnValue(new Promise((resolve)=> {
-          resolve({givenName: "John"});
+          resolve({givenName: 'John'});
       }));
 
-      return service.saveUser({givenName: "John"})
+      return service.saveUser({givenName: 'John'})
         .then((resp) => {
           expect(mockValidate).toHaveBeenCalledTimes(1);
           expect(mockInsert).toHaveBeenCalledTimes(1);
@@ -139,16 +139,16 @@ describe("UserService", () => {
         });
     });
 
-    test("should throw ApiError if insert to database fails", () => {
+    test('should throw ApiError if insert to database fails', () => {
       const service = new UserService();
 
       mockValidate.mockReturnValue({errors: [], isValid: true});
 
       mockInsert.mockReturnValue(new Promise((resolve, reject)=> {
-          reject(new Error("Bad stuff happened"));
+          reject(new Error('Bad stuff happened'));
       }));
 
-      return service.saveUser({givenName: "John"})
+      return service.saveUser({givenName: 'John'})
         .catch((e) => {
           expect(mockValidate).toHaveBeenCalledTimes(1);
           expect(mockInsert).toHaveBeenCalledTimes(1);
@@ -157,9 +157,9 @@ describe("UserService", () => {
         });
     });
 
-    test("should update to database if details valid and an _id exists", () => {
+    test('should update to database if details valid and an _id exists', () => {
       const service = new UserService();
-      let john = {givenName: "John", _id: "123123"};
+      let john = {givenName: 'John', _id: '123123'};
 
       mockValidate.mockReturnValue({errors: [], isValid: true});
 
@@ -175,14 +175,14 @@ describe("UserService", () => {
         });
     });
 
-    test("should throw ApiError if update to database fails", () => {
+    test('should throw ApiError if update to database fails', () => {
       const service = new UserService();
-      let john = {givenName: "John", _id: "123123"};
+      let john = {givenName: 'John', _id: '123123'};
 
       mockValidate.mockReturnValue({errors: [], isValid: true});
 
       mockUpdate.mockReturnValue(new Promise((resolve, reject)=> {
-          reject(new Error("Bad stuff happened"));
+          reject(new Error('Bad stuff happened'));
       }));
 
       return service.saveUser(john)
@@ -196,9 +196,9 @@ describe("UserService", () => {
 
   });
 
-  describe("When deleting a user", () => {
+  describe('When deleting a user', () => {
 
-    test("should throw ApiError if no id is provided", () => {
+    test('should throw ApiError if no id is provided', () => {
       const service = new UserService();
 
       return service.delete()
@@ -209,27 +209,27 @@ describe("UserService", () => {
         });
     });
 
-    test("should delete from database if details valid", () => {
+    test('should delete from database if details valid', () => {
       const service = new UserService();
 
       mockDelete.mockReturnValue(new Promise((resolve)=> {
-          resolve({message: "Success"});
+          resolve({message: 'Success'});
       }));
 
-      return service.delete("123123")
+      return service.delete('123123')
         .then((response) => {
           expect(mockDelete).toHaveBeenCalledTimes(1);
         });
     });
 
-    test("should throw ApiError if delete from database fails", () => {
+    test('should throw ApiError if delete from database fails', () => {
       const service = new UserService();
 
       mockDelete.mockReturnValue(new Promise((resolve, reject)=> {
-          reject(new Error("Bad stuff happened"));
+          reject(new Error('Bad stuff happened'));
       }));
 
-      return service.delete("123123")
+      return service.delete('123123')
         .catch((e) => {
           expect(mockDelete).toHaveBeenCalledTimes(1);
           expect(e instanceof ApiError).toBe(true);

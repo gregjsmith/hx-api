@@ -1,63 +1,61 @@
-import UserDb from './db/UserDb'
 import moment from 'moment';
+import UserDb from './db/UserDb'
 import UserValidator from './UserValidator';
 import ApiError from './ApiError';
 
 class UserService {
-
-  constructor(){
+  constructor() {
     this.db = new UserDb();
     this.validator = new UserValidator();
   }
 
-  getUsers(){
+  getUsers() {
     return new Promise((resolve, reject) => {
       this.db.getAll()
         .then((users) => {
           resolve(users);
         })
         .catch((e) => {
-          reject(new ApiError("Failed to retrieve all users", e));
+          reject(new ApiError('Failed to retrieve all users', e));
         });
     });
   }
 
-  saveUser(user){
-    let result = this.validator.validate(user);
+  saveUser(user) {
+    const result = this.validator.validate(user);
 
-    if(!result.isValid){
+    if (!result.isValid) {
       return new Promise((resolve, reject) => {
         reject(new ApiError('Validation Failed', result.errors));
       });
     }
 
-    if(!user._id){
+    if (!user._id) {
       user.created = moment().format();
       return new Promise((resolve, reject) => {
         this.db.insert(user)
           .then((user) => {
-            resolve({user, status: 'created'});
+            resolve({ user, status: 'created' });
           })
           .catch((e) => {
             reject(new ApiError('Failed to create new user', e));
           });
       });
-    } else{
-      user.updated = moment().format();
-      return new Promise((resolve, reject) => {
-        this.db.update(user)
-          .then((user) => {
-            resolve({user, status: 'updated'});
-          })
-          .catch((e) => {
-            reject(new ApiError(`Failed to update user with id ${user._id}`, e));
-          });
-      });
     }
+    user.updated = moment().format();
+    return new Promise((resolve, reject) => {
+      this.db.update(user)
+        .then((user) => {
+          resolve({ user, status: 'updated' });
+        })
+        .catch((e) => {
+          reject(new ApiError(`Failed to update user with id ${user._id}`, e));
+        });
+    });
   }
 
-  delete(id){
-    if(!id){
+  delete(id) {
+    if (!id) {
       return new Promise((resolve, reject) => {
         reject(new ApiError('Mandatory parameter id was not provided'));
       });
@@ -66,7 +64,7 @@ class UserService {
     return new Promise((resolve, reject) => {
       this.db.delete(id)
         .then((removed) => {
-          resolve({removed});
+          resolve({ removed });
         })
         .catch((e) => {
           reject(new ApiError(`Failed to delete user with id ${id}`, e));
@@ -74,8 +72,8 @@ class UserService {
     });
   }
 
-  getById(id){
-    if(!id){
+  getById(id) {
+    if (!id) {
       return new Promise((resolve, reject) => {
         reject(new ApiError('Mandatory parameter id was not provided'));
       });

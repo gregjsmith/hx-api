@@ -1,14 +1,13 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import UserTable from './UserTable';
 import AddUserForm from './AddUserForm';
 
 class App extends Component {
-
   state = {
-      users: []
-    }
+    users: []
+  }
 
   componentDidMount() {
     axios.get('/api/users')
@@ -20,7 +19,6 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <div>
         <h3>
@@ -38,5 +36,5 @@ class App extends Component {
 
 export default App;
 
-const wrapper = document.getElementById("content");
+const wrapper = document.getElementById('content');
 wrapper ? ReactDOM.render(<App />, wrapper) : false;

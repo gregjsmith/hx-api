@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-function UserTable(props){
-  const users = props.users;
+function UserTable(props) {
+  const { users } = props;
 
-  const tableRows = users.map((user) =>
+  const tableRows = users.map(user =>
     <tr key={user._id}>
       <td>{user._id}</td>
       <td>{`${user.givenName} ${user.familyName}`}</td>
