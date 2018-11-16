@@ -1,6 +1,6 @@
 import UserService from '../UserService';
 import UserDb, {mockInsert, mockUpdate, mockDelete, mockGetAll, mockGetById} from '../db/UserDb';
-import UserValidator, {mockValidate, mockValidateForDelete} from '../UserValidator';
+import UserValidator, {mockValidate} from '../UserValidator';
 import ApiError from '../ApiError';
 
 jest.mock('../db/UserDb');
@@ -18,7 +18,6 @@ describe("UserService", () => {
 
     UserValidator.mockClear();
     mockValidate.mockReset();
-    mockValidateForDelete.mockReset();
   });
 
   afterEach(()=> {
@@ -199,31 +198,13 @@ describe("UserService", () => {
 
   describe("When deleting a user", () => {
 
-    test("user details should be validated", () => {
+    test("should throw ApiError if no id is provided", () => {
       const service = new UserService();
 
-      mockValidateForDelete.mockReturnValue({errors: [], isValid: true});
-
-      mockDelete.mockReturnValue(new Promise((resolve)=> {
-          resolve({givenName: "John"});
-      }));
-
-      return service.delete({_id: 123123})
-        .then((numberDeleted) => {
-          expect(mockValidateForDelete).toHaveBeenCalledTimes(1);
-        });
-    });
-
-    test("should throw ApiError if user details invalid", () => {
-      const service = new UserService();
-
-      mockValidateForDelete.mockReturnValue({errors: [], isValid: false});
-
-      return service.delete({_id: 123123})
+      return service.delete()
         .catch((e) => {
-          expect(mockValidateForDelete).toHaveBeenCalledTimes(1);
           expect(e instanceof ApiError).toBe(true);
-          expect(e.message).toContain('Validation Failed');
+          expect(e.message).toContain('Mandatory parameter id was not provided');
           expect(mockDelete).toHaveBeenCalledTimes(0);
         });
     });
@@ -231,15 +212,12 @@ describe("UserService", () => {
     test("should delete from database if details valid", () => {
       const service = new UserService();
 
-      mockValidateForDelete.mockReturnValue({errors: [], isValid: true});
-
       mockDelete.mockReturnValue(new Promise((resolve)=> {
           resolve({message: "Success"});
       }));
 
-      return service.delete({_id: "123123"})
+      return service.delete("123123")
         .then((response) => {
-          expect(mockValidateForDelete).toHaveBeenCalledTimes(1);
           expect(mockDelete).toHaveBeenCalledTimes(1);
         });
     });
@@ -247,15 +225,12 @@ describe("UserService", () => {
     test("should throw ApiError if delete from database fails", () => {
       const service = new UserService();
 
-      mockValidateForDelete.mockReturnValue({errors: [], isValid: true});
-
       mockDelete.mockReturnValue(new Promise((resolve, reject)=> {
           reject(new Error("Bad stuff happened"));
       }));
 
-      return service.delete({_id: "123123"})
+      return service.delete("123123")
         .catch((e) => {
-          expect(mockValidateForDelete).toHaveBeenCalledTimes(1);
           expect(mockDelete).toHaveBeenCalledTimes(1);
           expect(e instanceof ApiError).toBe(true);
           expect(e.message).toContain('Failed to delete user with id 123123');

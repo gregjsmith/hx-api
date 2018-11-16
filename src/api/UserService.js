@@ -59,7 +59,7 @@ class UserService {
   delete(id){
     if(!id){
       return new Promise((resolve, reject) => {
-        reject(new ApiError('Validation Failed', result.errors));
+        reject(new ApiError('Mandatory parameter id was not provided'));
       });
     }
 
@@ -75,6 +75,11 @@ class UserService {
   }
 
   getById(id){
+    if(!id){
+      return new Promise((resolve, reject) => {
+        reject(new ApiError('Mandatory parameter id was not provided'));
+      });
+    }
     return new Promise((resolve, reject) => {
       this.db.getById(id)
         .then((user) => {

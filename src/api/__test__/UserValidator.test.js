@@ -65,31 +65,4 @@ describe("UserValidator", () => {
 
   });
 
-  describe("when deleting a user", () => {
-
-    test("should check the id is present", () => {
-      let validator = new UserValidator();
-      let user = {givenName: "Given", familyName: "Family", age: 34, email: "test@test.com"};
-
-      let result = validator.validateForDelete(user);
-
-      expect(result.isValid).toBe(false);
-      expect(result.errors.length).toBe(1);
-      expect(result.errors[0].field).toBe("_id");
-      expect(result.errors[0].message).toContain("is required");
-
-    });
-
-    test("should return no errors when the id is present", () => {
-      let validator = new UserValidator();
-      let user = {givenName: "Given", familyName: "Family", age: 34, email: "test@test.com", _id: "ldkjfhvd978yh"};
-
-      let result = validator.validateForDelete(user);
-
-      expect(result.isValid).toBe(true);
-      expect(result.errors.length).toBe(0);
-    });
-
-  });
-
 });

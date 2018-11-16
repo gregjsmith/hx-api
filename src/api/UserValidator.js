@@ -28,20 +28,6 @@ class UserValidator {
 
     return processValidationResult(result);
   }
-
-  validateForDelete(user){
-    const validator = new Validator();
-
-    let schema = {
-        _id: { type: "string", min: 1, max: 255 },
-    };
-
-    let check = this.validator.compile(schema);
-
-    let result = check(user);
-
-    return processValidationResult(result);
-  }
 }
 
 export default UserValidator;
