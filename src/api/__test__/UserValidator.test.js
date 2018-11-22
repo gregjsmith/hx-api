@@ -1,15 +1,20 @@
+/* eslint-disable import/named, object-curly-newline, no-undef */
+
 import UserValidator from '../UserValidator';
 
 describe('UserValidator', () => {
-
   describe('when saving a user', () => {
     test('should validate empty givenName', () => {
+      const validator = new UserValidator();
 
-      let validator = new UserValidator();
+      const user = {
+        givenName: '',
+        familyName: 'Family',
+        age: 34,
+        email: 'test@test.com',
+      };
 
-      let user = {givenName: '', familyName: 'Family', age: 34, email: 'test@test.com'};
-
-      let result = validator.validate(user);
+      const result = validator.validate(user);
 
       expect(result.isValid).toBe(false);
       expect(result.errors.length).toBe(1);
@@ -18,11 +23,15 @@ describe('UserValidator', () => {
     });
 
     test('should validate empty familyName', () => {
+      const validator = new UserValidator();
+      const user = {
+        givenName: 'Given',
+        familyName: '',
+        age: 34,
+        email: 'test@test.com'
+      };
 
-      let validator = new UserValidator();
-      let user = {givenName: 'Given', familyName: '', age: 34,email: 'test@test.com'};
-
-      let result = validator.validate(user);
+      const result = validator.validate(user);
       expect(result.isValid).toBe(false);
       expect(result.errors.length).toBe(1);
       expect(result.errors[0].field).toBe('familyName');
@@ -30,11 +39,10 @@ describe('UserValidator', () => {
     });
 
     test('should validate undefined age', () => {
+      const validator = new UserValidator();
+      const user = { givenName: 'Given', familyName: 'Family', email: 'test@test.com' };
 
-      let validator = new UserValidator();
-      let user = {givenName: 'Given', familyName: 'Family', email: 'test@test.com'};
-
-      let result = validator.validate(user);
+      const result = validator.validate(user);
       expect(result.isValid).toBe(false);
       expect(result.errors.length).toBe(1);
       expect(result.errors[0].field).toBe('age');
@@ -42,11 +50,10 @@ describe('UserValidator', () => {
     });
 
     test('should validate empty email address', () => {
+      const validator = new UserValidator();
+      const user = { givenName: 'Given', familyName: 'Family', age: 34, email: '' };
 
-      let validator = new UserValidator();
-      let user = {givenName: 'Given', familyName: 'Family', age: 34, email: ''};
-
-      let result = validator.validate(user);
+      const result = validator.validate(user);
       expect(result.isValid).toBe(false);
       expect(result.errors.length).toBe(1);
       expect(result.errors[0].field).toBe('email');
@@ -54,15 +61,12 @@ describe('UserValidator', () => {
     });
 
     test('should return no error for a valid user', () => {
+      const validator = new UserValidator();
+      const user = { givenName: 'Given', familyName: 'Family', age: 34, email: 'test@test.com' };
 
-      let validator = new UserValidator();
-      let user = {givenName: 'Given', familyName: 'Family', age: 34, email: 'test@test.com'};
-
-      let result = validator.validate(user);
+      const result = validator.validate(user);
       expect(result.isValid).toBe(true);
       expect(result.errors.length).toBe(0);
     });
-
   });
-
 });
