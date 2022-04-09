@@ -21,7 +21,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "fastest-validator": "^0.6.12",
-    "moment": "^2.22.2",
+    "moment": "^2.29.2",
     "nedb": "^1.8.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
