@@ -19,7 +19,7 @@
     "@babel/preset-env": "^7.1.0",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "fastest-validator": "^0.6.12",
     "moment": "^2.22.2",
     "nedb": "^1.8.0",
